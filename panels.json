@@ -1,3 +1,42 @@
 {
-  "panels": []
+  "panels": [
+    {
+      "repository": "swisssoftwarelaboratory/panel-sample",
+      "owner": "swisssoftwarelaboratory",
+      "name": "Hello",
+      "description": "A sample panel: write something and draft it as a message to the agent.",
+      "icon": "https://raw.githubusercontent.com/swisssoftwarelaboratory/panel-sample/b537d4819f4819d877763c30a81af1b04481f140/icon.svg",
+      "page": "panel.html",
+      "pageUrl": "https://raw.githubusercontent.com/swisssoftwarelaboratory/panel-sample/b537d4819f4819d877763c30a81af1b04481f140/panel.html",
+      "version": "b537d48",
+      "commit": "b537d4819f4819d877763c30a81af1b04481f140",
+      "kind": "panel",
+      "sites": [],
+      "stars": 0,
+      "createdAt": "2026-11-15T12:02:25Z",
+      "checkedAt": "2026-11-15T12:17:24Z"
+    },
+    {
+      "repository": "swisssoftwarelaboratory/panel-sample-tools",
+      "owner": "swisssoftwarelaboratory",
+      "name": "Clock",
+      "description": "A sample panel with tools: the time on the machine SSL Code runs on, for you and the agent.",
+      "icon": "https://raw.githubusercontent.com/swisssoftwarelaboratory/panel-sample-tools/2b8162109991ef1ebc195423a80ebb782c6e7c23/icon.svg",
+      "page": "panel.html",
+      "pageUrl": "https://raw.githubusercontent.com/swisssoftwarelaboratory/panel-sample-tools/2b8162109991ef1ebc195423a80ebb782c6e7c23/panel.html",
+      "version": "2b81621",
+      "commit": "2b8162109991ef1ebc195423a80ebb782c6e7c23",
+      "kind": "panel-with-tools",
+      "sites": [],
+      "tools": {
+        "command": "node",
+        "args": [
+          "server.mjs"
+        ]
+      },
+      "stars": 0,
+      "createdAt": "2026-11-15T12:02:47Z",
+      "checkedAt": "2026-11-15T12:17:24Z"
+    }
+  ]
 }

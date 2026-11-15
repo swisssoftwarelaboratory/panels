@@ -1,6 +1,6 @@
 # SSL Code panels
 
-Panels are small pages that sit in SSL Code's right panel next to Terminal, Browser and the rest. Anyone can make one, and SSL Code's Settings > Panels search finds it. This repository holds the list that search reads, and the job that writes it.
+Panels are small pages that sit in SSL Code's right panel next to Terminal, Browser and the rest. Anyone can make one, and SSL Code's Settings > Panels search finds it. This repository holds the list that search reads, and how it is made.
 
 ## Make a panel
 
@@ -22,7 +22,7 @@ Panels are small pages that sit in SSL Code's right panel next to Terminal, Brow
 
 5. Give the repository the topic **`sslcode-panel`**.
 
-Within the hour the job below finds it. Anyone can also add it before then by pasting the repository's link into Settings > Panels.
+It shows up in the search once it is listed (see below). Anyone can add it before then by pasting the repository's link into Settings > Panels.
 
 **Two kinds of panel.** A plain panel is only its page. A **panel with tools** also names an MCP server (`"tools": { "npx": "your-package@1.2.3" }`, pinned to an exact version, or `"tools": { "command": "node", "args": ["server.mjs"] }` with its code in the repository). That server runs on the user's machine with their rights, gives the page and the agent tools, and is the only way a panel can read files.
 
@@ -34,10 +34,6 @@ Samples to copy: [panel-sample](https://github.com/swisssoftwarelaboratory/panel
 
 ## How the list is made
 
-Every hour [the List panels workflow](.github/workflows/list-panels.yml) searches GitHub for the topic, takes each repository's newest release (or its newest commit when it has none), and checks every version it hasn't checked yet:
+From time to time a maintainer asks an agent to list the panels, following [the list-panels skill](skills/list-panels/SKILL.md). It searches GitHub for the topic, takes each repository's newest release (or its newest commit when it has none), and checks every version not checked yet: the panel file must follow the schema, release files must match the source, and Claude reads the page and the tools server's source for anything that steals, talks to sites it didn't declare, impersonates another panel, or hides what it does.
 
-- `sslcode-panel.json` must match the schema, and the page and icon must be there.
-- Any release file named like the page or a server file must be that file, byte for byte.
-- Claude reads the page and the tools server's source for anything that steals, talks to sites it didn't declare, impersonates another panel, or hides what it does.
-
-A version that passes goes into [`panels.json`](panels.json), pinned to the commit that was checked. A version that fails goes into [`panels-removed.json`](panels-removed.json) with the reason in one sentence, and the last version that passed stays listed. SSL Code switches off any installed panel whose version is on the removal list, and shows why. Nobody approves anything by hand.
+A version that passes goes into [`panels.json`](panels.json), pinned to the commit that was checked. A version that fails goes into [`panels-removed.json`](panels-removed.json) with the reason in one sentence, and the last version that passed stays listed. SSL Code switches off any installed panel whose version is on the removal list, and shows why. Until a new panel is listed, anyone can still add it by pasting its link into Settings > Panels.
