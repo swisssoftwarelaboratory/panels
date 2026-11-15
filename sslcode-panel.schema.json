@@ -1,0 +1,104 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://raw.githubusercontent.com/swisssoftwarelaboratory/panels/main/sslcode-panel.schema.json",
+  "title": "sslcode-panel.json",
+  "description": "Describes an SSL Code panel. Put it at the root of a public GitHub repository with the topic sslcode-panel.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "description", "icon", "page"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "name": {
+      "description": "The panel's name, shown on its pill and in the search.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 40
+    },
+    "description": {
+      "description": "One line on what the panel shows or does.",
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 140
+    },
+    "icon": {
+      "description": "Path in the repository to a square SVG or PNG icon.",
+      "type": "string",
+      "pattern": "^(?!/)(?!.*\\.\\.)[^\\s]+\\.(svg|png)$"
+    },
+    "page": {
+      "description": "Path in the repository to the panel's page: one self-contained HTML file (5 MB at most) that speaks MCP Apps. It can load nothing from other files.",
+      "type": "string",
+      "pattern": "^(?!/)(?!.*\\.\\.)[^\\s]+\\.html?$"
+    },
+    "sites": {
+      "description": "Every site the page talks to or loads from, as https:// or wss:// origins. Anything else is blocked. Leave it out for a panel that uses no network.",
+      "type": "array",
+      "uniqueItems": true,
+      "maxItems": 20,
+      "items": {
+        "type": "string",
+        "pattern": "^(https|wss)://(\\*\\.)?[a-z0-9]([a-z0-9-]*[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+(:[0-9]{1,5})?$"
+      }
+    },
+    "tools": {
+      "description": "An MCP server (stdio) that gives the page and the agent tools. It runs on the user's machine with the user's rights.",
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["npx"],
+          "properties": {
+            "npx": {
+              "description": "An npm package pinned to an exact version, run with npx.",
+              "type": "string",
+              "pattern": "^(@[a-z0-9][a-z0-9._-]*/)?[a-z0-9][a-z0-9._-]*@[0-9]+\\.[0-9]+\\.[0-9]+(-[0-9A-Za-z.-]+)?$"
+            },
+            "args": { "type": "array", "items": { "type": "string" }, "maxItems": 20 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["command"],
+          "properties": {
+            "command": {
+              "description": "A command run in the panel's own folder, such as node. Its code lives in this repository.",
+              "type": "string",
+              "minLength": 1
+            },
+            "args": { "type": "array", "items": { "type": "string" }, "maxItems": 20 }
+          }
+        }
+      ]
+    },
+    "needs": {
+      "description": "Other software the panel needs on the user's machine. Until it is found, the panel shows Needs <name> with a Get link and does nothing else.",
+      "type": "array",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "get"],
+        "oneOf": [{ "required": ["app"] }, { "required": ["command"] }],
+        "properties": {
+          "name": { "type": "string", "minLength": 1, "maxLength": 40 },
+          "app": {
+            "description": "A Mac app, found by its bundle id.",
+            "type": "string",
+            "pattern": "^[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)+$"
+          },
+          "command": {
+            "description": "A command found on the PATH.",
+            "type": "string",
+            "pattern": "^[A-Za-z0-9._+-]+$"
+          },
+          "get": {
+            "description": "Where to get it.",
+            "type": "string",
+            "pattern": "^https://"
+          }
+        }
+      }
+    }
+  }
+}
